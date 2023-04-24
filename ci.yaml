@@ -26,8 +26,8 @@ jobs:
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
-        workload_identity_provider: 'projects/838277582049/locations/global/workloadIdentityPools/new-pool/providers/new-provider'
-        service_account: 'my-service-account@as-joonix-project-001.iam.gserviceaccount.com'
+        workload_identity_provider: 'projects/838277582049/locations/global/workloadIdentityPools/pleo-tech-demo-pool/providers/pleo-github-provider'
+        service_account: 'pleo-tech-demo@as-joonix-project-001.iam.gserviceaccount.com'
         token_format: 'access_token'
         create_credentials_file: false
         
