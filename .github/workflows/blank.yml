@@ -1,0 +1,38 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  job_id:
+    runs-on: ubuntu-latest
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    # actions/checkout MUST come before auth
+    - uses: 'actions/checkout@v3'
+
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        workload_identity_provider: 'projects/838277582049/locations/global/workloadIdentityPools/pleo-tech-demo-pool/providers/pleo-github-provider'
+        service_account: 'pleo-tech-demo@as-joonix-project-001.iam.gserviceaccount.com'
+        token_format: 'access_token'
+        create_credentials_file: false
+        
+    - name: 'gcloud login'
+      env: 
+        CLOUDSDK_AUTH_ACCESS_TOKEN: '${{ steps.auth.outputs.access_token }}'
+      run: |
+        gcloud compute instances list
